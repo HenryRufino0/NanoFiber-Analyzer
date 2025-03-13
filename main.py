@@ -7,7 +7,7 @@ import numpy as np
 class ImageAnalyzerApp:
     def __init__(self, master):
         self.master = master
-        master.title("🔬 Analisador de Fibras em Escala Nanométrica")
+        master.title("🔬 Nanoscale Fiber Analyzer")
         master.geometry("850x750")
         master.configure(bg="#2C3E50")
 
@@ -21,11 +21,11 @@ class ImageAnalyzerApp:
         button_style = {"font": ("Helvetica", 12, "bold"), "bg": "#3498DB", "fg": "#FFFFFF", "activebackground": "#2980B9"}
 
         # Título
-        tk.Label(master, text="🔬 Analisador de Fibras em Escala Nanométrica", **title_style).pack(pady=10)
+        tk.Label(master, text="🔬 Nanoscale Fiber Analyzer", **title_style).pack(pady=10)
 
         # Seleção da imagem
-        tk.Label(master, text="Selecione a Imagem:", **label_style).pack(pady=5)
-        tk.Button(master, text="Carregar Imagem", command=self.load_image, **button_style).pack(pady=5)
+        tk.Label(master, text="Select a Image:", **label_style).pack(pady=5)
+        tk.Button(master, text="Load Image", command=self.load_image, **button_style).pack(pady=5)
 
         self.image_label = tk.Label(master, bg="#2C3E50")
         self.image_label.pack(pady=10)
@@ -37,10 +37,10 @@ class ImageAnalyzerApp:
         tk.Label(settings_frame, text="Cutoff (pixels):", **label_style).pack(pady=5)
         tk.Scale(settings_frame, from_=1, to=2000, orient='horizontal', variable=self.cutoff, bg="#34495E", fg="#ECF0F1").pack(pady=5)
 
-        tk.Label(settings_frame, text="Pixels por Micrômetro:", **label_style).pack(pady=5)
+        tk.Label(settings_frame, text="Pixels per Micrometer:", **label_style).pack(pady=5)
         tk.Entry(settings_frame, textvariable=self.ppm, font=("Helvetica", 12)).pack(pady=5)
 
-        tk.Button(master, text="Analisar Imagem", command=self.analyze_image, **button_style).pack(pady=10)
+        tk.Button(master, text="Analyse Image", command=self.analyze_image, **button_style).pack(pady=10)
 
         self.output_text = tk.Text(master, height=10, font=("Helvetica", 11), bg="#34495E", fg="#ECF0F1")
         self.output_text.pack(pady=10, fill=tk.BOTH, padx=20)
@@ -57,7 +57,7 @@ class ImageAnalyzerApp:
 
     def analyze_image(self):
         if not self.image_path.get():
-            messagebox.showerror("Erro", "Por favor, selecione uma imagem primeiro.")
+            messagebox.showerror("Error", "Please, first select a image!")
             return
 
         image = cv2.imread(self.image_path.get())
@@ -104,7 +104,7 @@ class ImageAnalyzerApp:
 
         overall_mean_nm = 1000 * np.mean(diameters)
 
-        result = f"Diâmetro médio: {overall_mean_nm:.2f} nm\n\nDiâmetros medidos (nm): {all_diameters_nm}"
+        result = f"Average diameter: {overall_mean_nm:.2f} nm\n\n Measured diameters (nm): {all_diameters_nm}"
 
         self.output_text.delete(1.0, tk.END)
         self.output_text.insert(tk.END, result)
